@@ -1,0 +1,8 @@
+set a response uri on fit bit
+create a an express app
+create a get route to store token
+do a post request using request library
+watch get response on redirection uri
+
+brew
+heroku cli
