@@ -1,6 +1,7 @@
 /* eslint-disable no-console, max-len, no-unused-vars, no-shadow, camelcase */
 const express = require('express');
 const logger = require('morgan');
+const globalLog = require('global-request-logger');
 const bodyParser = require('body-parser');
 const request = require('request');
 const util = require('util');
@@ -22,7 +23,7 @@ if (typeof secret === 'undefined') {
   throw new Error('NO_FITBIT_SECRET');
 }
 
-const headerResponse = `${clientId}:${secret}`.toString(64);
+const headerResponse = (clientId + ':' + secret).toString(64); // eslint-disable-line prefer-template
 
 
 // Set up the express app
@@ -32,6 +33,20 @@ app.use(express.static('client'));
 
 // Log requests to the console.
 app.use(logger('dev'));
+
+// Log OUTGOING
+globalLog.initialize();
+globalLog.on('success', (request, response) => {
+  console.log('SUCCESS');
+  console.log('Request', request);
+  console.log('Response', response);
+});
+
+globalLog.on('error', (request, response) => {
+  console.log('ERROR');
+  console.log('Request', request);
+  console.log('Response', response);
+});
 
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());
@@ -52,7 +67,7 @@ app.get('/auth', (req, res) => {
     qs: {
       client_id: clientId,
       grant_type: 'authorization_code',
-      // redirect_uri: app.get('redirect_uri'),
+      redirect_uri: app.get('redirect_uri'),
       code: req.query.code,
     },
     headers: {
