@@ -153,9 +153,9 @@ app.get('/auth', (req, res) => {
     }
 
     // You'd likely us 'fs' to read/write from disk (See bottom of file)
-    app.set('access_token', response.access_token);
-    app.set('refresh_token', response.refresh_token);
-    app.set('user_id', response.user_id);
+    app.set('access_token', FB_response.access_token);
+    app.set('refresh_token', FB_response.refresh_token);
+    app.set('user_id', FB_response.user_id);
 
     makeAPIRequest(req, res);
   });
