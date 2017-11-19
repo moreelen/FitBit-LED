@@ -126,7 +126,7 @@ function makeAPIRequest(req, res) {
     heartData = JSON.parse(body);
     heartData = heartData['activities-heart-intraday'].dataset;
     console.log('Heart Data: ', heartData);
-    return res.status(200).json(body['activities-heart-intraday'].dataset);
+    return res.status(200).json(body);
   });
 }
 
