@@ -51,13 +51,15 @@ app.get('/auth', (req, res) => {
 // Token request - gets URL which we need to redirect the user to
 // so they can input their username and login details.
 app.get('/token', (req, res) => {
+  const redirect_uri = `https://${req.hostname}/auth`; // eslint-disable-line camelcase
+  console.log('redirect_uri', redirect_uri);
   const options = {
     method: 'POST',
     url: 'https://www.fitbit.com/oauth2/authorize',
     qs: {
       response_type: 'token',
       client_id: clientId,
-      redirect_uri: `https://${req.hostname}/auth`,
+      redirect_uri,
       scope: 'heartrate',
       // scope: 'activity nutrition heartrate location nutrition profile settings sleep social weight',
       expires_in: '604800',
