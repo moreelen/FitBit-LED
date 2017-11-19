@@ -5,6 +5,7 @@ const globalLog = require('global-request-logger');
 const bodyParser = require('body-parser');
 const request = require('request');
 const util = require('util');
+const compression = require('compression');
 // const childProcess = require('child_process');
 
 const port = process.env.PORT || 8553;
@@ -30,6 +31,8 @@ const headerResponse = buff.toString('base64');
 
 // Set up the express app
 const app = express();
+
+app.use(compression());
 
 app.use(express.static('client'));
 
