@@ -123,7 +123,7 @@ function makeAPIRequest(req, res) {
       }
     }
     //console.log('Final Result: ', body);
-    heartData = JSON.parse(body);
+    heartData = body;
     console.log('Heart Data: ',heartData);
     return res.status(200).json(body);
   });
