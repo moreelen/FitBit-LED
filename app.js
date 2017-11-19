@@ -24,6 +24,8 @@ const headerResponse = `${clientId}:${secret}`;
 // Set up the express app
 const app = express();
 
+app.use(express.static('client'));
+
 // Log requests to the console.
 app.use(logger('dev'));
 
@@ -55,7 +57,7 @@ app.get('/token', (req, res) => {
     qs: {
       response_type: 'token',
       client_id: clientId,
-      redirect_uri: '/auth',
+      redirect_uri: `https://${req.hostname}/auth`,
       scope: 'heartrate',
       // scope: 'activity nutrition heartrate location nutrition profile settings sleep social weight',
       expires_in: '604800',
