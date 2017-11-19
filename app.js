@@ -3,6 +3,7 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const request = require('request');
+const util = require('util');
 // const childProcess = require('child_process');
 
 const port = process.env.PORT || 8553;
@@ -42,7 +43,12 @@ app.get('/auth', (req, res) => {
   console.log('originalUrl', req.originalUrl); // '/admin/new'
   console.log('baseUrl', req.baseUrl); // '/admin'
   console.log('path', req.path); // '/new'
-  return res.sendStatus(200);
+  // request({ method: 'GET', url: redirectURL }, (error, response, body) => {
+  //   if (error) throw new Error(error);
+  //   console.log('resp2', response);
+  //   console.log('body', body);
+  // });
+  return res.status(200).json(req);
 });
 
 // Server console
@@ -80,11 +86,6 @@ app.get('/token', (req, res) => {
     console.log('redirectURL', redirectURL);
     // childProcess.exec(`open -a "Google Chrome" ${redirectURL}`);
     return res.redirect(redirectURL);
-    // request({ method: 'GET', url: redirectURL }, (error, response, body) => {
-    //   if (error) throw new Error(error);
-    //   console.log('resp2', response);
-    //   console.log('body', body);
-    // });
   });
 });
 
