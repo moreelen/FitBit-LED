@@ -1,4 +1,4 @@
-/* eslint-disable no-console, max-len, no-unused-vars, no-shadow, camelcase */
+/* eslint-disable no-console, max-len, no-unused-vars, no-shadow, camelcase, consistent-return */
 const express = require('express');
 const logger = require('morgan');
 const globalLog = require('global-request-logger');
@@ -57,6 +57,67 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Setup variables.
 let redirectURL = null;
 
+function refreshToken(req, res) {
+  const myFirstPromise = new Promise((resolve, reject) => {
+    const options = {
+      method: 'POST',
+      url: 'https://api.fitbit.com/oauth2/token',
+      qs: {
+        grant_type: 'refresh_token',
+        refresh_token: app.get('refresh_token'),
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${headerResponse}`,
+      },
+    };
+    request(options, (error, response, body) => {
+      if (error) return res.status(500).send(error);
+      const FB_response = JSON.parse(body);
+      console.log('AUTH response', FB_response);
+      const FB_Errors = FB_response.errors;
+      if (FB_Errors && FB_Errors.length) {
+        FB_Errors.forEach((err) => {
+          console.log('Error: ', err.message);
+        });
+        reject(new Error('FB_Errors'));
+      }
+      app.set('access_token', response.access_token);
+      app.set('refresh_token', response.refresh_token);
+      resolve(true);
+    });
+  });
+}
+
+function makeAPIRequest(req, res) {
+  const options = {
+    method: 'GET',
+    url: 'https://api.fitbit.com/1/user/-/profile.json',
+    qs: {
+    },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${app.get('access_token')}`,
+    },
+  };
+
+  request(options, (error, response, body) => {
+    if (error) return res.status(500).send(error);
+    const refreshNeeded = JSON.parse(body)
+      .errors.some(err => error.errorType === 'expired_token');
+
+    if (refreshNeeded) {
+      refreshToken(req, res)
+        .then(() => {
+          makeAPIRequest(req, res);
+        })
+        .catch(err => res.status(200).send(err));
+    }
+    console.log('Final Result: ', body);
+    return res.status(200).json(body);
+  });
+}
+
 // Check auth call works.
 app.get('/auth', (req, res) => {
   console.log('AUTH is hit');
@@ -89,7 +150,13 @@ app.get('/auth', (req, res) => {
       });
       return res.status(500).send(FB_Errors);
     }
-    return res.status(200).send(FB_response);
+
+    // You'd likely us 'fs' to read/write from disk (See bottom of file)
+    app.set('access_token', response.access_token);
+    app.set('refresh_token', response.refresh_token);
+    app.set('user_id', response.user_id);
+
+    makeAPIRequest(req, res);
   });
 });
 
@@ -132,3 +199,32 @@ const server = app.listen(port, () => {
 });
 
 module.exports = server;
+
+//
+// const  persist = {
+//     read: function( filename, cb ) {
+//         fs.readFile( filename, { encoding: 'utf8', flag: 'r' }, function( err, data ) {
+//             if ( err ) return cb( err );
+//             try {
+//                 var token = JSON.parse( data );
+//                 cb( null, token );
+//             } catch( err ) {
+//                 cb( err );
+//             }
+//         });
+//     },
+//     write: function( filename, token, cb ) {
+//         console.log( 'persisting new token:', JSON.stringify( token ) );
+//         fs.writeFile( filename, JSON.stringify( token ), cb );
+//     }
+// };
+
+// SAVING TOKENs
+// persist.write(token.json, (err, data) => {
+//  Do something with token
+// });
+
+// RETRIEVING TOKENS
+// persist.read(token.json, (err, data) => {
+//  Do something with token
+// });
