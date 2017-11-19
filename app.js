@@ -58,7 +58,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 let redirectURL = null;
 
 function refreshToken(req, res) {
-  const myFirstPromise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const options = {
       method: 'POST',
       url: 'https://api.fitbit.com/oauth2/token',
@@ -82,9 +82,9 @@ function refreshToken(req, res) {
         });
         reject(new Error('FB_Errors'));
       }
-      app.set('access_token', response.access_token);
-      app.set('refresh_token', response.refresh_token);
-      resolve(true);
+      app.set('access_token', FB_response.access_token);
+      app.set('refresh_token', FB_response.refresh_token);
+      resolve(FB_response);
     });
   });
 }
@@ -201,31 +201,12 @@ const server = app.listen(port, () => {
 
 module.exports = server;
 
-//
-// const  persist = {
-//     read: function( filename, cb ) {
-//         fs.readFile( filename, { encoding: 'utf8', flag: 'r' }, function( err, data ) {
-//             if ( err ) return cb( err );
-//             try {
-//                 var token = JSON.parse( data );
-//                 cb( null, token );
-//             } catch( err ) {
-//                 cb( err );
-//             }
-//         });
-//     },
-//     write: function( filename, token, cb ) {
-//         console.log( 'persisting new token:', JSON.stringify( token ) );
-//         fs.writeFile( filename, JSON.stringify( token ), cb );
-//     }
-// };
-
 // SAVING TOKENs
-// persist.write(token.json, (err, data) => {
+// write(token.json, (err, data) => {
 //  Do something with token
 // });
 
 // RETRIEVING TOKENS
-// persist.read(token.json, (err, data) => {
+// read(token.json, (err, data) => {
 //  Do something with token
 // });
