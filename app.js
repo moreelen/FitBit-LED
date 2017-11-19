@@ -159,7 +159,7 @@ app.get('/auth', (req, res) => {
       return res.status(400).send(FB_Errors);
     }
 
-    // You'd likely us 'fs' to read/write from disk (See bottom of file)
+    // You'd likely use 'fs' to read/write from disk (See bottom of file)
     app.set('access_token', FB_response.access_token);
     app.set('refresh_token', FB_response.refresh_token);
     app.set('user_id', FB_response.user_id);
@@ -181,7 +181,7 @@ app.get('/token', (req, res) => {
       response_type: 'code',
       client_id: clientId,
       redirect_uri,
-      scope: 'heartrate',
+      scope: 'heartrate sleep',
       // scope: 'activity nutrition heartrate location nutrition profile settings sleep social weight',
       expires_in: '604800',
     },
@@ -205,10 +205,8 @@ app.get('/token', (req, res) => {
     } catch (e) {
       console.log(e.message);
     }
-    // console.log(response.headers.location);
     redirectURL = response.headers.location;
     console.log('redirectURL', redirectURL);
-    // childProcess.exec(`open -a "Google Chrome" ${redirectURL}`);
     return res.redirect(redirectURL);
   });
 });
