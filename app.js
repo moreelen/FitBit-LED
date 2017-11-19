@@ -90,6 +90,7 @@ function refreshToken(req, res) {
 }
 
 function makeAPIRequest(req, res) {
+  console.log('access token before api call', app.get('access_token'));
   const options = {
     method: 'GET',
     url: 'https://api.fitbit.com/1/user/-/profile.json',
@@ -104,7 +105,7 @@ function makeAPIRequest(req, res) {
   request(options, (error, response, body) => {
     if (error) return res.status(500).send(error);
     const refreshNeeded = JSON.parse(body)
-      .errors.some(err => error.errorType === 'expired_token');
+      .errors.some(err => err.errorType === 'expired_token');
 
     if (refreshNeeded) {
       refreshToken(req, res)
