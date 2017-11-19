@@ -43,12 +43,13 @@ app.get('/auth', (req, res) => {
   console.log('originalUrl', req.originalUrl); // '/admin/new'
   console.log('baseUrl', req.baseUrl); // '/admin'
   console.log('path', req.path); // '/new'
+  console.log('params', req.params);
   // request({ method: 'GET', url: redirectURL }, (error, response, body) => {
   //   if (error) throw new Error(error);
   //   console.log('resp2', response);
   //   console.log('body', body);
   // });
-  return res.status(200).json(req);
+  return res.status(200).send(req);
 });
 
 // Server console
@@ -66,7 +67,7 @@ app.get('/token', (req, res) => {
     method: 'POST',
     url: 'https://www.fitbit.com/oauth2/authorize',
     qs: {
-      response_type: 'token',
+      response_type: 'code',
       client_id: clientId,
       redirect_uri,
       scope: 'heartrate',
