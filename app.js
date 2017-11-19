@@ -11,6 +11,9 @@ const port = process.env.PORT || 8553;
 const clientId = process.env.FITBIT_CLIENT_ID;
 const secret = process.env.FITBIT_SECRET;
 
+console.log('clientId', clientId);
+console.log('secret', secret);
+
 if (typeof clientId === 'undefined') {
   throw new Error('NO_FITBIT_CLIENT_ID');
 }
@@ -40,13 +43,16 @@ let redirectURL = null;
 // Check auth call works.
 app.get('/auth', (req, res) => {
   console.log('AUTH is hit');
+  console.log('clientId', clientId);
+  console.log('redirect_uri', app.get('redirect_uri'));
+  console.log('code', req.query.code);
   const options = {
     method: 'POST',
     url: 'https://api.fitbit.com/oauth2/token',
     qs: {
       client_id: clientId,
       grant_type: 'authorization_code',
-      redirect_uri: app.get('redirect_uri'),
+      // redirect_uri: app.get('redirect_uri'),
       code: req.query.code,
     },
     headers: {
@@ -69,12 +75,6 @@ app.get('/auth', (req, res) => {
     return res.status(200).send(FB_response);
   });
 });
-
-// Server console
-// app.use((req, res, next) => {
-//     console.log('%s request to %s from %s', req.method, req.path, req.ip);
-//     next();
-// });
 
 // Token request - gets URL which we need to redirect the user to
 // so they can input their username and login details.
