@@ -115,7 +115,7 @@ function makeAPIRequest(req, res) {
           .then(() => {
             makeAPIRequest(req, res);
           })
-          .catch(err => res.status(200).send(err));
+          .catch(err => res.status(500).send(err));
       }
     }
     console.log('Final Result: ', body);
@@ -153,7 +153,7 @@ app.get('/auth', (req, res) => {
       FB_Errors.forEach((err) => {
         console.log('Error: ', err.message);
       });
-      return res.status(500).send(FB_Errors);
+      return res.status(400).send(FB_Errors);
     }
 
     // You'd likely us 'fs' to read/write from disk (See bottom of file)
@@ -189,7 +189,15 @@ app.get('/token', (req, res) => {
 
   request(options, (error, response, body) => {
     if (error) return res.status(500).send(error);
-    console.log('token body', body);
+    const FB_response = JSON.parse(body);
+    console.log('AUTH response', FB_response);
+    const FB_Errors = FB_response.errors;
+    if (FB_Errors && FB_Errors.length) {
+      FB_Errors.forEach((err) => {
+        console.log('Error: ', err.message);
+      });
+      return res.status(400).send(FB_Errors);
+    }
     // console.log(response.headers.location);
     redirectURL = response.headers.location;
     console.log('redirectURL', redirectURL);
