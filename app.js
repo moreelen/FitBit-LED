@@ -51,7 +51,7 @@ app.get('/auth', (req, res) => {
     },
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Basic: ${headerResponse}`,
+      Authorization: `Basic ${headerResponse}`,
     },
   };
 
@@ -94,7 +94,7 @@ app.get('/token', (req, res) => {
       expires_in: '604800',
     },
     headers: {
-      Authorization: `Basic: ${headerResponse}`,
+      Authorization: `Basic ${headerResponse}`,
     },
   };
 
