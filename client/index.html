@@ -5,21 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Fitbit</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link rel="stylesheet" href="./styles/styles.css">
 </head>
 <body>
-  <div id="get_token"><p>Get token</p></div>
-
-  <!-- Init jQuery -->
-  <script
-  src="https://code.jquery.com/jquery-3.2.1.js"
-  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-  crossorigin="anonymous"></script>
-
-  <!-- Init ajax -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-
-  <!-- Init own scripts -->
-  <script type="text/javascript" src="scripts/main.js"></script>
+  <div class="container">
+    <h1>Fitbit App</h1>
+    <a href="/token" id="load" class="waves-effect waves-light btn">get token</a>
+  </div>
+  <script src="./scripts/main.js"></script>
 </body>
 </html>
