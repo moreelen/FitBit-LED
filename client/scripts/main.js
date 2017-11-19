@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const oReq = new XMLHttpRequest();
     oReq.addEventListener('load', reqListener);
-    oReq.open('GET', 'https://fitbit-rosa.herokuapp.com/auth');
+    oReq.open('GET', 'https://fitbit-rosa.herokuapp.com/token');
     oReq.send();
   });
 });
