@@ -1,3 +1,4 @@
+
 // window.addEventListener('DOMContentLoaded', () => {
 //   const messagesArea = document.getElementById('messages');
 //   const loadButton = document.getElementById('load');
