@@ -57,8 +57,8 @@ app.get('/auth', (req, res) => {
 
   request(options, (error, response, body) => {
     if (error) return res.status(500).send(error);
-    console.log('AUTH response', response);
-    return res.sendStatus(200);
+    console.log('AUTH response', body);
+    return res.status(200).send(body);
   });
 });
 
@@ -92,7 +92,7 @@ app.get('/token', (req, res) => {
 
   request(options, (error, response, body) => {
     if (error) return res.status(500).send(error);
-    // console.log(response);
+    console.log('token body', body);
     // console.log(response.headers.location);
     redirectURL = response.headers.location;
     console.log('redirectURL', redirectURL);
