@@ -39,7 +39,7 @@ let redirectURL = null;
 // Check auth call works.
 app.get('/auth', (req, res) => {
   console.log('AUTH is hit');
-  console.log('response:\n\n', res);
+  console.log('response:\n\n', req);
 });
 
 // Server console
