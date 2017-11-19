@@ -13,8 +13,8 @@ const port = process.env.PORT || 8553;
 const clientId = process.env.FITBIT_CLIENT_ID;
 const secret = process.env.FITBIT_SECRET;
 
-console.log('clientId', clientId);
-console.log('secret', secret);
+//console.log('clientId', clientId);
+//console.log('secret', secret);
 
 if (typeof clientId === 'undefined') {
   throw new Error('NO_FITBIT_CLIENT_ID');
@@ -43,8 +43,8 @@ app.use(logger('dev'));
 globalLog.initialize();
 globalLog.on('success', (request, response) => {
   console.log('SUCCESS');
-  console.log('Request', request);
-  console.log('Response', response);
+  //console.log('Request', request);
+  //console.log('Response', response);
 });
 
 globalLog.on('error', (request, response) => {
@@ -59,6 +59,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Setup variables.
 let redirectURL = null;
+let heartData = null;
 
 function refreshToken(req, res) {
   return new Promise((resolve, reject) => {
@@ -77,7 +78,7 @@ function refreshToken(req, res) {
     request(options, (error, response, body) => {
       if (error) return res.status(500).send(error);
       const FB_response = JSON.parse(body);
-      console.log('AUTH response', FB_response);
+      //console.log('AUTH response', FB_response);
       const FB_Errors = FB_response.errors;
       if (FB_Errors && FB_Errors.length) {
         FB_Errors.forEach((err) => {
@@ -93,7 +94,7 @@ function refreshToken(req, res) {
 }
 
 function makeAPIRequest(req, res) {
-  console.log('access token before api call', app.get('access_token'));
+  //console.log('access token before api call', app.get('access_token'));
   const options = {
     method: 'GET',
     url: `https://api.fitbit.com/1/user/${app.get('user_id')}/activities/heart/date/today/1d.json`,
@@ -121,7 +122,9 @@ function makeAPIRequest(req, res) {
           .catch(err => res.status(500).send(err));
       }
     }
-    console.log('Final Result: ', body);
+    //console.log('Final Result: ', body);
+    heartData = JSON.parse(body);
+    console.log('Heart Data: ',heartData);
     return res.status(200).json(body);
   });
 }
@@ -129,9 +132,9 @@ function makeAPIRequest(req, res) {
 // Check auth call works.
 app.get('/auth', (req, res) => {
   console.log('AUTH is hit');
-  console.log('clientId', clientId);
-  console.log('redirect_uri', app.get('redirect_uri'));
-  console.log('code', req.query.code);
+  //console.log('clientId', clientId);
+  //console.log('redirect_uri', app.get('redirect_uri'));
+  //console.log('code', req.query.code);
   const options = {
     method: 'POST',
     url: 'https://api.fitbit.com/oauth2/token',
@@ -150,7 +153,7 @@ app.get('/auth', (req, res) => {
   request(options, (error, response, body) => {
     if (error) return res.status(500).send(error);
     const FB_response = JSON.parse(body);
-    console.log('AUTH response', FB_response);
+    //console.log('AUTH response', FB_response);
     const FB_Errors = FB_response.errors;
     if (FB_Errors && FB_Errors.length) {
       FB_Errors.forEach((err) => {
@@ -173,7 +176,7 @@ app.get('/auth', (req, res) => {
 app.get('/token', (req, res) => {
   const redirect_uri = `https://${req.hostname}/auth`; // eslint-disable-line camelcase
   app.set('redirect_uri', redirect_uri);
-  console.log('redirect_uri', redirect_uri);
+  //console.log('redirect_uri', redirect_uri);
   const options = {
     method: 'POST',
     url: 'https://www.fitbit.com/oauth2/authorize',
@@ -194,7 +197,7 @@ app.get('/token', (req, res) => {
     if (error) return res.status(500).send(error);
     try {
       const FB_response = JSON.parse(body);
-      console.log('AUTH response', FB_response);
+      //console.log('AUTH response', FB_response);
       const FB_Errors = FB_response.errors;
       if (FB_Errors && FB_Errors.length) {
         FB_Errors.forEach((err) => {
@@ -206,14 +209,14 @@ app.get('/token', (req, res) => {
       console.log(e.message);
     }
     redirectURL = response.headers.location;
-    console.log('redirectURL', redirectURL);
+    //console.log('redirectURL', redirectURL);
     return res.redirect(redirectURL);
   });
 });
 
 // Server
 const server = app.listen(port, () => {
-  console.log(`rosa final project is working on port ${port}`);
+  //console.log(`rosa final project is working on port ${port}`);
 });
 
 module.exports = server;
