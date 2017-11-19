@@ -104,15 +104,19 @@ function makeAPIRequest(req, res) {
 
   request(options, (error, response, body) => {
     if (error) return res.status(500).send(error);
-    const refreshNeeded = JSON.parse(body)
-      .errors.some(err => err.errorType === 'expired_token');
+    const oBody = JSON.parse(body);
+    const FB_Errors = oBody.errors;
+    if (FB_Errors && FB_Errors.length) {
+      const refreshNeeded = oBody
+        .errors.some(err => err.errorType === 'expired_token');
 
-    if (refreshNeeded) {
-      refreshToken(req, res)
-        .then(() => {
-          makeAPIRequest(req, res);
-        })
-        .catch(err => res.status(200).send(err));
+      if (refreshNeeded) {
+        refreshToken(req, res)
+          .then(() => {
+            makeAPIRequest(req, res);
+          })
+          .catch(err => res.status(200).send(err));
+      }
     }
     console.log('Final Result: ', body);
     return res.status(200).json(body);
