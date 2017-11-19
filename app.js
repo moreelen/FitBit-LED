@@ -71,7 +71,8 @@ app.get('/token', (req, res) => {
     // console.log(response.headers.location);
     redirectURL = response.headers.location;
     console.log('redirectURL', redirectURL);
-    childProcess.exec(`open -a "Google Chrome" ${redirectURL}`);
+    // childProcess.exec(`open -a "Google Chrome" ${redirectURL}`);
+    return res.redirect(redirectURL);
   });
 });
 
