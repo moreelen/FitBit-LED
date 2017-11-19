@@ -19,7 +19,7 @@ if (typeof secret === 'undefined') {
   throw new Error('NO_FITBIT_SECRET');
 }
 
-const headerResponse = `${clientId}:${secret}`;
+const headerResponse = `${clientId}:${secret}`.toString(64);
 
 
 // Set up the express app
@@ -40,10 +40,6 @@ let redirectURL = null;
 // Check auth call works.
 app.get('/auth', (req, res) => {
   console.log('AUTH is hit');
-  console.log('originalUrl', req.originalUrl); // '/admin/new'
-  console.log('baseUrl', req.baseUrl); // '/admin'
-  console.log('path', req.path); // '/new'
-  console.log('query', req.query);
   const options = {
     method: 'POST',
     url: 'https://www.fitbit.com/oauth2/token',
@@ -55,16 +51,15 @@ app.get('/auth', (req, res) => {
     },
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Basic: ${headerResponse.toString(64)}`,
+      Authorization: `Basic: ${headerResponse}`,
     },
   };
 
   request(options, (error, response, body) => {
-    if (error) throw new Error(error);
-    console.log('response', response);
-    return res.send(response);
+    if (error) return res.status(500).send(error);
+    console.log('AUTH response', response);
+    return res.sendStatus(200);
   });
-  return res.status(200).send(req.query);
 });
 
 // Server console
@@ -91,12 +86,12 @@ app.get('/token', (req, res) => {
       expires_in: '604800',
     },
     headers: {
-      Authorization: `Basic: ${headerResponse.toString(64)}`,
+      Authorization: `Basic: ${headerResponse}`,
     },
   };
 
   request(options, (error, response, body) => {
-    if (error) throw new Error(error);
+    if (error) return res.status(500).send(error);
     // console.log(response);
     // console.log(response.headers.location);
     redirectURL = response.headers.location;
