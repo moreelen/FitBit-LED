@@ -1,4 +1,4 @@
-/* eslint-disable no-console, max-len, no-unused-vars, no-shadow */
+/* eslint-disable no-console, max-len, no-unused-vars, no-shadow, camelcase */
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
@@ -42,7 +42,7 @@ app.get('/auth', (req, res) => {
   console.log('AUTH is hit');
   const options = {
     method: 'POST',
-    url: 'https://www.fitbit.com/oauth2/token',
+    url: 'https://api.fitbit.com/oauth2/token',
     qs: {
       client_id: clientId,
       grant_type: 'authorization_code',
@@ -57,8 +57,16 @@ app.get('/auth', (req, res) => {
 
   request(options, (error, response, body) => {
     if (error) return res.status(500).send(error);
-    console.log('AUTH response', body);
-    return res.status(200).send(body);
+    const FB_response = JSON.parse(body);
+    console.log('AUTH response', FB_response);
+    const FB_Errors = FB_response.errors;
+    if (FB_Errors && FB_Errors.length) {
+      FB_Errors.forEach((err) => {
+        console.log('Error: ', err.message);
+      });
+      return res.status(500).send(FB_Errors);
+    }
+    return res.status(200).send(FB_response);
   });
 });
 
