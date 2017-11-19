@@ -23,7 +23,9 @@ if (typeof secret === 'undefined') {
   throw new Error('NO_FITBIT_SECRET');
 }
 
-const headerResponse = (clientId + ':' + secret).toString(64); // eslint-disable-line prefer-template
+const creds = `${clientId}:${secret}`;
+const buff = Buffer.from(creds);
+const headerResponse = buff.toString('base64');
 
 
 // Set up the express app
