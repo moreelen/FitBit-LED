@@ -79,11 +79,12 @@ app.get('/token', (req, res) => {
     redirectURL = response.headers.location;
     console.log('redirectURL', redirectURL);
     // childProcess.exec(`open -a "Google Chrome" ${redirectURL}`);
-    request({ method: 'GET', url: redirectURL }, (error, response, body) => {
-      if (error) throw new Error(error);
-      console.log('resp2', response);
-      console.log('body', body);
-    });
+    return res.redirect(redirectURL);
+    // request({ method: 'GET', url: redirectURL }, (error, response, body) => {
+    //   if (error) throw new Error(error);
+    //   console.log('resp2', response);
+    //   console.log('body', body);
+    // });
   });
 });
 
