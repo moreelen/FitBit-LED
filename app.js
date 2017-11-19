@@ -43,13 +43,28 @@ app.get('/auth', (req, res) => {
   console.log('originalUrl', req.originalUrl); // '/admin/new'
   console.log('baseUrl', req.baseUrl); // '/admin'
   console.log('path', req.path); // '/new'
-  console.log('params', req.params);
-  // request({ method: 'GET', url: redirectURL }, (error, response, body) => {
-  //   if (error) throw new Error(error);
-  //   console.log('resp2', response);
-  //   console.log('body', body);
-  // });
-  return res.status(200).send(req);
+  console.log('query', req.query);
+  const options = {
+    method: 'POST',
+    url: 'https://www.fitbit.com/oauth2/token',
+    qs: {
+      client_id: clientId,
+      grant_type: 'authorization_code',
+      redirect_uri: app.get('redirect_uri'),
+      code: req.query.code,
+    },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: `Basic: ${headerResponse.toString(64)}`,
+    },
+  };
+
+  request(options, (error, response, body) => {
+    if (error) throw new Error(error);
+    console.log('response', response);
+    return res.send(response);
+  });
+  return res.status(200).send(req.query);
 });
 
 // Server console
@@ -62,6 +77,7 @@ app.get('/auth', (req, res) => {
 // so they can input their username and login details.
 app.get('/token', (req, res) => {
   const redirect_uri = `https://${req.hostname}/auth`; // eslint-disable-line camelcase
+  app.set('redirect_uri', redirect_uri);
   console.log('redirect_uri', redirect_uri);
   const options = {
     method: 'POST',
