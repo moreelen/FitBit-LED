@@ -189,14 +189,18 @@ app.get('/token', (req, res) => {
 
   request(options, (error, response, body) => {
     if (error) return res.status(500).send(error);
-    const FB_response = JSON.parse(body);
-    console.log('AUTH response', FB_response);
-    const FB_Errors = FB_response.errors;
-    if (FB_Errors && FB_Errors.length) {
-      FB_Errors.forEach((err) => {
-        console.log('Error: ', err.message);
-      });
-      return res.status(400).send(FB_Errors);
+    try {
+      const FB_response = JSON.parse(body);
+      console.log('AUTH response', FB_response);
+      const FB_Errors = FB_response.errors;
+      if (FB_Errors && FB_Errors.length) {
+        FB_Errors.forEach((err) => {
+          console.log('Error: ', err.message);
+        });
+        return res.status(400).send(FB_Errors);
+      }
+    } catch (e) {
+      console.log(e.message);
     }
     // console.log(response.headers.location);
     redirectURL = response.headers.location;
