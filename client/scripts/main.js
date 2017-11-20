@@ -37,14 +37,20 @@ window.onload = function(){
       e.preventDefault();
       e.stopPropagation();
 
-      function reqListener(data) {
-        console.log('data', data);
-      }
+      // function reqListener(data) {
+      //   console.log('data', data);
+      // }
+      //
+      // const oReq = new XMLHttpRequest();
+      // oReq.addEventListener('load', reqListener);
+      // oReq.open('GET', '/data');
+      // oReq.send();
 
-      const oReq = new XMLHttpRequest();
-      oReq.addEventListener('load', reqListener);
-      oReq.open('GET', '/data');
-      oReq.send();
+      fetch('https://fitbit-rosa.herokuapp.com/data')
+      .then(response => response.json())
+      .then(function(data) {
+        console.log('data', data);
+      });
     });
 
 
