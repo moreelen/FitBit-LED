@@ -125,10 +125,10 @@ function makeAPIRequest(req, res) {
       }
     }
     //console.log('Final Result: ', body);
-    heartData = JSON.parse(body);
-    heartData = heartData['activities-heart-intraday'].dataset;
+    // heartData = JSON.parse(body);
+    heartData = oBody['activities-heart-intraday'].dataset;
     console.log('Heart Data: ', heartData);
-    return res.status(200).json(body);
+    return res.status(200).json(heartData);
   });
 }
 
