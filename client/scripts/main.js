@@ -17,23 +17,25 @@
 window.onload = function(){
 
     const messagesArea = document.getElementById('messages');
-    const authButton = document.getElementById('auth');
+    // const authButton = document.getElementById('auth');
     const loadButton = document.getElementById('auth');
-    authButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      messagesArea.innerText = 'Loading...';
-      function reqListener() {
-        messagesArea.innerText = 'Done!!';
-      }
-
-      const oReq = new XMLHttpRequest();
-      oReq.addEventListener('load', reqListener);
-      oReq.open('GET', 'https://fitbit-rosa.herokuapp.com/token');
-      oReq.send();
-    });
+    // authButton.addEventListener('click', (e) => {
+    //   e.preventDefault();
+    //   messagesArea.innerText = 'Loading...';
+    //   function reqListener() {
+    //     messagesArea.innerText = 'Done!!';
+    //   }
+    //
+    //   const oReq = new XMLHttpRequest();
+    //   oReq.addEventListener('load', reqListener);
+    //   oReq.open('GET', 'https://fitbit-rosa.herokuapp.com/token');
+    //   oReq.send();
+    // });
 
     loadButton.addEventListener('click', (e) => {
+      console.log('load button pressed');
       e.preventDefault();
+      e.stopPropagation();
 
       function reqListener(data) {
         console.log('data', data);

@@ -156,7 +156,7 @@ app.get('/auth', (req, res) => {
   request(options, (error, response, body) => {
     if (error) return res.status(500).send(error);
     const FB_response = JSON.parse(body);
-    //console.log('AUTH response', FB_response);
+    console.log('AUTH response', FB_response);
     const FB_Errors = FB_response.errors;
     if (FB_Errors && FB_Errors.length) {
       FB_Errors.forEach((err) => {
@@ -170,7 +170,10 @@ app.get('/auth', (req, res) => {
     app.set('refresh_token', FB_response.refresh_token);
     app.set('user_id', FB_response.user_id);
 
-    // makeAPIRequest(req, res);
+    console.log('a_token', app.get('access_token'));
+    console.log('r_token', app.get('refresh_token'));
+    console.log('user_id', app.get('user_id'));
+    console.log('redirecting home...');
     res.redirect('/');
   });
 });
