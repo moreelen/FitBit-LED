@@ -118,6 +118,8 @@ function makeAPIRequest(req, res) {
         refreshToken(req, res)
           .then(() => {
             makeAPIRequest(req, res);
+            console.log('refreshed Token');
+            // return res.status(200).json(body);
           })
           .catch(err => res.status(500).send(err));
       }
@@ -168,8 +170,13 @@ app.get('/auth', (req, res) => {
     app.set('refresh_token', FB_response.refresh_token);
     app.set('user_id', FB_response.user_id);
 
-    makeAPIRequest(req, res);
+    // makeAPIRequest(req, res);
+    res.redirect('/');
   });
+});
+
+app.get('/data', (...args) => {
+  makeAPIRequest(args);
 });
 
 // Token request - gets URL which we need to redirect the user to
