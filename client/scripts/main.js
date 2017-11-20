@@ -18,7 +18,7 @@ window.onload = function(){
 
     const messagesArea = document.getElementById('messages');
     // const authButton = document.getElementById('auth');
-    const loadButton = document.getElementById('auth');
+    const loadButton = document.getElementById('load');
     // authButton.addEventListener('click', (e) => {
     //   e.preventDefault();
     //   messagesArea.innerText = 'Loading...';
