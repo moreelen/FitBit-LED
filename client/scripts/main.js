@@ -2,6 +2,8 @@ window.onload = function(){
 
   const messagesArea = document.getElementById('messages');
   const loadButton = document.getElementById('load');
+  const showData = document.getElementById('showData');
+
   var heartBeat = 0;
 
   loadButton.addEventListener('click', (e) => {
@@ -14,8 +16,12 @@ window.onload = function(){
     .then((data) => {
       console.log(data);
       heartBeat = data;
+      console.log(heartBeat);
     });
+  });
 
+  showData.addEventListener('click', (e) => {
+    console.log('show button pressed');
     console.log(heartBeat);
   });
 
