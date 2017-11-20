@@ -15,6 +15,25 @@
 // });
 
 window.onload = function(){
+
+    const messagesArea = document.getElementById('messages');
+    const loadButton = document.getElementById('load');
+    loadButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      messagesArea.innerText = 'Loading...';
+      function reqListener() {
+        messagesArea.innerText = 'Done!!';
+      }
+
+      const oReq = new XMLHttpRequest();
+      oReq.addEventListener('load', reqListener);
+      oReq.open('GET', 'https://fitbit-rosa.herokuapp.com/token');
+      oReq.send();
+    });
+
+
+
+
   var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height"),
