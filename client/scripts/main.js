@@ -1,61 +1,24 @@
-// window.addEventListener('DOMContentLoaded', () => {
-//   const messagesArea = document.getElementById('messages');
-//   const loadButton = document.getElementById('load');
-//   loadButton.addEventListener('click', () => {
-//     messagesArea.innerText = 'Loading...';
-//     function reqListener() {
-//       messagesArea.innerText = 'Done!!';
-//     }
-//
-//     const oReq = new XMLHttpRequest();
-//     oReq.addEventListener('load', reqListener);
-//     oReq.open('GET', 'https://fitbit-rosa.herokuapp.com/token');
-//     oReq.send();
-//   });
-// });
-
 window.onload = function(){
 
-    const messagesArea = document.getElementById('messages');
-    // const authButton = document.getElementById('auth');
-    const loadButton = document.getElementById('load');
-    // authButton.addEventListener('click', (e) => {
-    //   e.preventDefault();
-    //   messagesArea.innerText = 'Loading...';
-    //   function reqListener() {
-    //     messagesArea.innerText = 'Done!!';
-    //   }
-    //
-    //   const oReq = new XMLHttpRequest();
-    //   oReq.addEventListener('load', reqListener);
-    //   oReq.open('GET', 'https://fitbit-rosa.herokuapp.com/token');
-    //   oReq.send();
-    // });
+  const messagesArea = document.getElementById('messages');
+  const loadButton = document.getElementById('load');
+  var heartBeat = null;
 
-    loadButton.addEventListener('click', (e) => {
-      console.log('load button pressed');
-      e.preventDefault();
-      e.stopPropagation();
+  loadButton.addEventListener('click', (e) => {
+    console.log('load button pressed');
+    e.preventDefault();
+    e.stopPropagation();
 
-      // function reqListener(data) {
-      //   console.log('data', data);
-      // }
-      //
-      // const oReq = new XMLHttpRequest();
-      // oReq.addEventListener('load', reqListener);
-      // oReq.open('GET', '/data');
-      // oReq.send();
-
-      fetch('https://fitbit-rosa.herokuapp.com/data')
-      .then(response => response.json())
-      .then(function(data) {
-        console.log('data', data);
-      });
+    fetch('https://fitbit-rosa.herokuapp.com/data')
+    .then(response => response.json())
+    .then((data) => {
+      heartBeat = data;
     });
 
+    console.log(heartBeat);
+  });
 
-
-
+// D3 graphics
   var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height"),

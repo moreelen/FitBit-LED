@@ -117,8 +117,8 @@ function makeAPIRequest(req, res) {
       if (refreshNeeded) {
         refreshToken(req, res)
           .then(() => {
-            makeAPIRequest(req, res);
             console.log('refreshed Token');
+            makeAPIRequest(req, res);
             // return res.status(200).json(body);
           })
           .catch(err => res.status(500).send(err));
