@@ -2,7 +2,7 @@ window.onload = function(){
 
   const messagesArea = document.getElementById('messages');
   const loadButton = document.getElementById('load');
-  var heartBeat = null;
+  var heartBeat = 0;
 
   loadButton.addEventListener('click', (e) => {
     console.log('load button pressed');
@@ -12,6 +12,7 @@ window.onload = function(){
     fetch('https://fitbit-rosa.herokuapp.com/data')
     .then(response => response.json())
     .then((data) => {
+      console.log(data);
       heartBeat = data;
     });
 
