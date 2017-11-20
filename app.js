@@ -179,7 +179,7 @@ app.get('/auth', (req, res) => {
 });
 
 app.get('/data', (...args) => {
-  makeAPIRequest(args);
+  makeAPIRequest(...args);
 });
 
 // Token request - gets URL which we need to redirect the user to
