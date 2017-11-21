@@ -21,6 +21,8 @@ $(function(){
 
   // EVENT HANDLERS
   loadButton.on('click.load', function(e) {
+    // e.preventDefault();
+    // e.stopImmediatePropagation();
 
     fetch('https://fitbit-rosa.herokuapp.com/data')
     .then(response => response.json())
@@ -28,9 +30,6 @@ $(function(){
       // console.log(data);
       heartBeat = data;
     });
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    
     return false;
   });
 
