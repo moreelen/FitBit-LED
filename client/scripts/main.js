@@ -29,7 +29,7 @@ window.onload = function(){
   function spliceTime(time){
     time = time.split(":");
     time = time[0] + time[1];
-    time = (time / 2459) * 100;
+    time = (time / 2359) * 100;
     return time;
   }
 
