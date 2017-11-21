@@ -27,8 +27,7 @@ window.onload = function(){
   // Transform time value into x coordinate.
   function spliceTime(time){
     time = time.split(":"); // Split out the hours/minutes/seconds.
-    time[0] = time[0] * 60; // Turn hours into minutes.
-    time = time[0] + time[1]; // Add minutes together.
+    time = (parseInt(time[0]) * 60) + parseInt(time[1]); // Add minutes together.
     time = (time / 1440) * 100; // Percentage of minutes in a day.
     return time;
   }
