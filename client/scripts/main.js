@@ -6,6 +6,7 @@ window.onload = function(){
   const messagesArea = document.getElementById('messages');
   const loadButton = document.getElementById('load');
   const showData = document.getElementById('showData');
+  const sky = document.getElementById('sky');
 
   // FUNCTIONS
 
@@ -13,7 +14,9 @@ window.onload = function(){
   function createStar(){
     console.log('create star');
     for (var i = 0; i < heartBeat.length; i++){
-      console.log(i)
+      var star = document.createElement("div");
+      star.setAttribute("class", "star").setAttribute("id", "star" + i );
+      sky.appendChild(star);
     }
   }
 
