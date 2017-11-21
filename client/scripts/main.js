@@ -12,7 +12,7 @@ window.onload = function(){
   // Create a star.
   function createStar(){
     console.log('create star');
-    for (var i = 0; i < heartData.length; i++){
+    for (var i = 0; i < heartBeat.length; i++){
       console.log(i)
     }
   }
