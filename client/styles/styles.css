@@ -1,0 +1,23 @@
+#sky {
+	background-color: black;
+	width: 100%;
+	height: 100vh;
+	position: relative;
+}
+
+#skyContainer {
+	color: black;
+	z-index: 3;
+	/* height: 100vh;*/
+	position: absolute;
+	top: 50vh;
+	left: 50%;
+}
+
+.star {
+  width: 2px;
+	height: 2px;
+  border-radius: 2px;
+	background-color: white;
+	position: absolute;
+}
