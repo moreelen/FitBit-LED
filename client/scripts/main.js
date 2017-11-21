@@ -20,7 +20,6 @@ window.onload = function(){
       star.id = i;
       star.style.bottom = heartBeat[i].value + "px";
       star.style.left = left + "%";
-      console.log(star);
       sky.appendChild(star);
     }
   }
