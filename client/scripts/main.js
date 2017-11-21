@@ -20,7 +20,7 @@ $(function(){
   }
 
   // EVENT HANDLERS
-  loadButton.click('click.load', function(e) {
+  loadButton.click(function(e) {
     console.log('load button pressed');
     e.preventDefault();
     e.stopPropagation();
