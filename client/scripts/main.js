@@ -15,7 +15,11 @@ window.onload = function(){
     console.log('create star');
     for (var i = 0; i < heartBeat.length; i++){
       var star = document.createElement("div");
-      star.setAttribute("class", "star").setAttribute("id", "star" + i );
+      star.className = "star";
+      star.id = i;
+      star.style.top = heartBeat[i].value + "%";
+      star.style.left = heartBeat[i].value + "%";
+      console.log(star);
       sky.appendChild(star);
     }
   }
