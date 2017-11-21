@@ -20,7 +20,7 @@ $(function(){
   }
 
   // EVENT HANDLERS
-  loadButton.click(function(e) {
+  loadButton.on('click.load', function(e) {
     console.log('load button pressed');
     e.preventDefault();
     e.stopPropagation();
@@ -31,6 +31,7 @@ $(function(){
       // console.log(data);
       heartBeat = data;
     });
+    return false;
   });
 
   showData.on('click.data', function() {
