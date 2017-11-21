@@ -14,14 +14,23 @@ window.onload = function(){
   function createStar(){
     console.log('create star');
     for (var i = 0; i < heartBeat.length; i++){
+      var left = spliceTime(heartBeat[i].time);
       var star = document.createElement("div");
       star.className = "star";
       star.id = i;
-      star.style.top = heartBeat[i].value + "%";
-      star.style.left = heartBeat[i].value + "%";
+      star.style.bottom = heartBeat[i].value + "px";
+      star.style.left = left + "%";
       console.log(star);
       sky.appendChild(star);
     }
+  }
+
+  // Transform time value into x coordinate.
+  function spliceTime(time){
+    time = time.split(":");
+    time = time[0] + time[1];
+    time = (time / 2459) * 100;
+    return time;
   }
 
   // EVENT HANDLERS
