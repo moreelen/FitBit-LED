@@ -1,12 +1,11 @@
-$(function(){
+window.onload = function(){
   // VARIABLES
   var heartBeat = 0;
 
   // BINDINGS
-  const messagesArea = $('messages');
-  const loadButton = $('load');
-  const showData = $('showData');
-  const $sky = $('sky');
+  const messagesArea = document.getElementById('messages');
+  const loadButton = document.getElementById('load');
+  const showData = document.getElementById('showData');
 
   // FUNCTIONS
 
@@ -14,15 +13,15 @@ $(function(){
   function createStar(){
     console.log('create star');
     for (var i = 0; i < heartData.length; i++){
-      console.log(i);
-      // $sky.append("<div class='star' id='" + id + "'></div>");
+      console.log(i)
     }
   }
 
   // EVENT HANDLERS
-  loadButton.on('click.load', function(e) {
-    // e.preventDefault();
-    e.stopImmediatePropagation();
+  loadButton.addEventListener('click', (e) => {
+    console.log('load button pressed');
+    e.preventDefault();
+    e.stopPropagation();
 
     fetch('https://fitbit-rosa.herokuapp.com/data')
     .then(response => response.json())
@@ -30,13 +29,12 @@ $(function(){
       // console.log(data);
       heartBeat = data;
     });
-    return false;
   });
 
-  showData.on('click.data', function() {
+  showData.addEventListener('click', (e) => {
     console.log('show button pressed');
     console.log(heartBeat);
     createStar();
   });
 
-});
+}
