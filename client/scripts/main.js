@@ -20,7 +20,7 @@ $(function(){
   }
 
   // EVENT HANDLERS
-  loadButton.addEventListener('click', (e) => {
+  loadButton.on('click.load', function() {
     console.log('load button pressed');
     e.preventDefault();
     e.stopPropagation();
@@ -33,7 +33,7 @@ $(function(){
     });
   });
 
-  showData.addEventListener('click', (e) => {
+  showData.on('click.data', function() {
     console.log('show button pressed');
     console.log(heartBeat);
     createStar();
