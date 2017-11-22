@@ -15,10 +15,12 @@ window.onload = function(){
     console.log('create star');
     for (var i = 0; i < heartBeat.length; i++){
       var left = spliceTime(heartBeat[i].time);
+      var bottom = transformHeart(heartBeat[i].value);
+
       var star = document.createElement("div");
       star.className = "star";
       star.id = i;
-      star.style.bottom = heartBeat[i].value + "px";
+      star.style.bottom = bottom + "px";
       star.style.left = left + "%";
       sky.appendChild(star);
     }
@@ -30,6 +32,12 @@ window.onload = function(){
     time = (parseInt(time[0]) * 60) + parseInt(time[1]); // Add minutes together.
     time = (time / 1440) * 100; // Percentage of minutes in a day.
     return time;
+  }
+
+  // Transform heartrate into y coordinate.
+  function transformHeart(beat){
+    beat = ((parseInt(beat) - 45) / 70) * 100;
+    return beat;
   }
 
   // EVENT HANDLERS
