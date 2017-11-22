@@ -42,9 +42,6 @@ window.onload = function(){
 
   // Grab data.
   function getData(e){
-    // e.preventDefault();
-    // e.stopPropagation();
-
     fetch('https://fitbit-rosa.herokuapp.com/data')
     .then(response => response.json())
     .then((data) => {
@@ -52,20 +49,11 @@ window.onload = function(){
       heartBeat = data;
       createStar();
     });
-    // return false;
   }
 
   // EVENT HANDLERS
-  loadButton.addEventListener('click', (e) => {
-    console.log('load button pressed');
-
-  });
-
   showData.addEventListener('click', (e) => {
-    console.log('show button pressed');
     getData();
   });
 
 }
-
-// TODO: Add
