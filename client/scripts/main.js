@@ -40,9 +40,8 @@ window.onload = function(){
     return beat;
   }
 
-  // EVENT HANDLERS
-  loadButton.addEventListener('click', (e) => {
-    console.log('load button pressed');
+  // Grab data.
+  function getData(e){
     e.preventDefault();
     e.stopPropagation();
 
@@ -52,12 +51,21 @@ window.onload = function(){
       // console.log(data);
       heartBeat = data;
     });
+  }
+
+  // EVENT HANDLERS
+  loadButton.addEventListener('click', (e) => {
+    console.log('load button pressed');
+
   });
 
   showData.addEventListener('click', (e) => {
     console.log('show button pressed');
+    getData();
     console.log(heartBeat);
     createStar();
   });
 
 }
+
+// TODO: Add
