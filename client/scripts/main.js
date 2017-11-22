@@ -50,6 +50,7 @@ window.onload = function(){
     .then((data) => {
       console.log('data');
       heartBeat = data;
+      createStar();
     });
     // return false;
   }
@@ -63,8 +64,6 @@ window.onload = function(){
   showData.addEventListener('click', (e) => {
     console.log('show button pressed');
     getData();
-    console.log(heartBeat);
-    createStar();
   });
 
 }
