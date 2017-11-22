@@ -48,7 +48,7 @@ window.onload = function(){
     fetch('https://fitbit-rosa.herokuapp.com/data')
     .then(response => response.json())
     .then((data) => {
-      // console.log(data);
+      console.log('data');
       heartBeat = data;
     });
     // return false;
