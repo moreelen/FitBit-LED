@@ -51,7 +51,7 @@ window.onload = function(){
       // console.log(data);
       heartBeat = data;
     });
-    return false;
+    // return false;
   }
 
   // EVENT HANDLERS
