@@ -97,7 +97,7 @@ function makeAPIRequest(req, res) {
   //console.log('access token before api call', app.get('access_token'));
   const options = {
     method: 'GET',
-    url: `https://api.fitbit.com/1/user/${app.get('user_id')}/activities/heart/date/today/1d.json`,
+    url: `https://api.fitbit.com/1/user/${app.get('user_id')}/activities/heart/date/2017-11-21/1d.json`,
     qs: {
     },
     headers: {
