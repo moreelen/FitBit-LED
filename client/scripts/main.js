@@ -20,7 +20,7 @@ window.onload = function(){
       var star = document.createElement("div");
       star.className = "star";
       star.id = i;
-      star.style.bottom = bottom + "px";
+      star.style.bottom = bottom + "%";
       star.style.left = left + "%";
       sky.appendChild(star);
     }
