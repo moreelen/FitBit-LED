@@ -132,47 +132,6 @@ function makeAPIRequest(req, res) {
   });
 }
 
-// function makeSleepRequest(req, res) {
-//   //console.log('access token before api call', app.get('access_token'));
-//   var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-//   console.log(date);
-//   const options = {
-//     method: 'GET',
-//     url: `https://api.fitbit.com/1.2/user/${app.get('user_id')}/sleep/date/${date}.json`,
-//     qs: {
-//     },
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${app.get('access_token')}`,
-//     },
-//   };
-//
-//   request(options, (error, response, body) => {
-//     if (error) return res.status(500).send(error);
-//     const oBody = JSON.parse(body);
-//     const FB_Errors = oBody.errors;
-//     if (FB_Errors && FB_Errors.length) {
-//       const refreshNeeded = oBody
-//         .errors.some(err => err.errorType === 'expired_token');
-//
-//       if (refreshNeeded) {
-//         refreshToken(req, res)
-//           .then(() => {
-//             console.log('refreshed Token');
-//             makeAPIRequest(req, res);
-//             // return res.status(200).json(body);
-//           })
-//           .catch(err => res.status(500).send(err));
-//       }
-//     }
-//     //console.log('Final Result: ', body);
-//     // heartData = JSON.parse(body);
-//     //heartData = oBody['activities-heart-intraday'].dataset;
-//     console.log('Sleep Data: ', oBody);
-//     return res.status(200).json(oBody);
-//   });
-// }
-
 // Check auth call works.
 app.get('/auth', (req, res) => {
   console.log('AUTH is hit');
